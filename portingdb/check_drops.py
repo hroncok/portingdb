@@ -106,6 +106,8 @@ def handle_filename(result, filename):
     elif filename.startswith((
         '/usr/lib/tmpfiles.d/',
         '/usr/lib/udev/rules.d/',
+        '/usr/lib/pkgconfig/',
+        '/usr/lib64/pkgconfig/',
         '/usr/share/bash-completion/',
         '/usr/src/',
         '/var/cache/',
@@ -115,8 +117,6 @@ def handle_filename(result, filename):
         '/var/spool/',
         '/var/tmp/',
         '/etc/',
-    )) and not filename.startswith((
-        '/etc/fedmsg.d/',  # needs investigating
     )):
         # Logs/Cache/Config; doesn't block dropping
         result['notes'].add('Logs/Cache/Config')
@@ -132,11 +132,13 @@ def handle_filename(result, filename):
         '/usr/share/conda',
         '/usr/share/fmn.web',
         '/usr/share/genmsg',
+        '/usr/share/gst-python',
         '/usr/share/libavogadro',
         '/usr/share/myhdl',
         '/usr/share/ocio',
         '/usr/share/os-brick',
         '/usr/share/pgu',
+        '/usr/share/pygtk',
         '/usr/share/pygtkchart',
         '/usr/share/python-dmidecode',
         '/usr/share/python-ldaptor',
