@@ -548,7 +548,7 @@ def check_drops(ctx, filelist, primary, cache_sax, cache_rpms):
         if verdict == 'keep':
             continue
         filtered = {n: r for n, r in results.items() if r['source_verdict'] == verdict}
-        with open(cache_dir / ('results-' + verdict + '.json'), 'w') as f:
+        with open(cache_dir / ('results-' + verdict + '-srpms.json'), 'w') as f:
             json.dump(filtered, f, indent=2)
         with open(cache_dir / ('results-' + verdict + '-srpms.txt'), 'w') as f:
             for name in set(r['source'] for r in filtered.values()):
