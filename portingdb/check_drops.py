@@ -535,7 +535,9 @@ def check_drops(ctx, filelist, primary, cache_sax, cache_rpms):
                 print(name, file=f)
 
     log('\nSource packages:')
-    stats_counter = collections.Counter(r['source_verdict'] for r in results.values())
+    # we will loose some information here, but that is OK for stats
+    source_results = {result['source']: result for result in results.values()}
+    stats_counter = collections.Counter(r['source_verdict'] for r in source_results.values())
     for package, number in stats_counter.most_common():
         log('{}: {}'.format(number, package))
 
@@ -546,5 +548,5 @@ def check_drops(ctx, filelist, primary, cache_sax, cache_rpms):
         with open(cache_dir / ('results-' + verdict + '.json'), 'w') as f:
             json.dump(filtered, f, indent=2)
         with open(cache_dir / ('results-' + verdict + '-srpms.txt'), 'w') as f:
-            for result in filtered.values():
-                print(result['source'], file=f)
+            for name in set(r['source'] for r in filtered.values()):
+                print(name, file=f)
