@@ -412,7 +412,7 @@ def check_drops(ctx, filelist, cache_sax, cache_rpms):
             if result.get('filename_unknown'):
                 result['needs_investigation'] = True
 
-    # Set legacy_leaf flags
+    # Set source package name and legacy_leaf flags
 
     query = db.query(tables.RPM)
     for rpm in query:
@@ -421,6 +421,7 @@ def check_drops(ctx, filelist, cache_sax, cache_rpms):
         result = results.get(name)
         if result:
             result['legacy_leaf'] = rpm.legacy_leaf
+            result['source'] = rpm.collection_package.name
 
     # hardcoded packages
 
