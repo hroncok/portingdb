@@ -501,7 +501,10 @@ def check_drops(ctx, filelist, primary, cache_sax, cache_rpms):
         result['source'], *_ = (s for s, p in sources.items() if name in p)
     for source, pkgs in sources.items():
         local_results = [r for r in results.values() if r['name'] in pkgs]
-        if all(r['verdict'] == 'drop_now' for r in local_results):
+        if len(local_results) < len(pkgs):
+            # subpackages we know nothing about
+            source_verdict = 'keep'
+        elif all(r['verdict'] == 'drop_now' for r in local_results):
             source_verdict = 'retire_now'
         elif all(r['verdict'].startswith('drop_') for r in local_results):
             source_verdict = 'retire_later'
